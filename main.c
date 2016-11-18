@@ -7,6 +7,12 @@ int main(int argc,char *argv[])
   int i, r, yy, mm, dd;
   float fval;
 
+  r = nscanf("abc","%d", &i);
+  assert(r == 0);
+  
+  r = nscanf("  abc","%g", &fval);
+  assert(r == 0);
+
   r = nscanf("2016/11/18", "%d/%d/%d",&yy,&mm,&dd);
   assert(r == 3);
   assert(yy == 2016);

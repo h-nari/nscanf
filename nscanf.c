@@ -40,25 +40,10 @@ int nscanf(const char *str, const char *fmt, ...)
 	rp = ep;
 	*ip = v;
 	cSuccess++;
-	  
-      } else if(fc == 'f'){
-	float fv;
-	v = strtol(rp, &ep, 10);
-	if(ep == rp && *ep != '.')
+      } else if(fc == 'f' || fc == 'g' || fc == 'e'){
+	double fv = strtod(rp, &ep);
+	if(ep == rp)
 	  break;
-	fv = v;
-	if(*ep == '.'){
-	  rp = ep+1;
-	  v = strtol(rp,&ep,10);
-	  if(ep != rp){
-	    float frac = v;
-	    while(v > 0){
-	      frac *= 0.1;
-	      v /= 10;
-	    }
-	    fv += fv > 0 ? frac : -frac;
-	  }
-	}
 	float *vp = va_arg(ap, float *);
 	*vp = fv;
 	cSuccess++;
