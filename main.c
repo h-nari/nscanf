@@ -7,6 +7,18 @@ int main(int argc,char *argv[])
   int a, b, c, i, r, yy, mm, dd;
   float fval;
 
+  r = nscanf("10 ", "%d\\", &i);
+  assert(r == 2);
+  assert(i == 10);
+  
+  r = nscanf("10", "%d\\", &i);
+  assert(r == 2);
+  assert(i == 10);
+  
+  r = nscanf("10a", "%d\\", &i);
+  assert(r == 1);
+  assert(i == 10);
+
   r = nscanf("10","%x", &i);
   assert(r == 1);
   assert(i == 16);

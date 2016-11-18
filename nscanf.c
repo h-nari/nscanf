@@ -2,6 +2,8 @@
 #include <stdarg.h>
 #include "nscanf.h"
 
+#define EOS_MATCHER_CHAR	'\\'
+
 static int n_isspace(char c)
 {
   return c == ' ' || c == 't' || c == '\n' || c == '\r';
@@ -28,7 +30,10 @@ int nscanf(const char *str, const char *fmt, ...)
       sc = *rp++;
       while(n_isspace(sc))
 	sc = *rp++;
-      if(fc != sc) 
+      if(sc == 0){
+	rp--; fp--;
+	break;
+      } else if(fc != sc) 
 	break;
       
     } else {  /* fc == '%' */
@@ -51,6 +56,11 @@ int nscanf(const char *str, const char *fmt, ...)
       }
     }
   }
+#ifdef EOS_MATCHER_CHAR
+  if(*rp == 0 && *fp == EOS_MATCHER_CHAR)
+    cSuccess++;
+#endif
+  
   va_end(ap);
   return cSuccess;
 }
