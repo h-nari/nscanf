@@ -6,7 +6,7 @@
 
 static int n_isspace(char c)
 {
-  return c == ' ' || c == 't' || c == '\n' || c == '\r';
+  return c == ' ' || c == '\t' || c == '\n' || c == '\r';
 }
 
 
