@@ -2,7 +2,7 @@
 #include <stdarg.h>
 #include "nscanf.h"
 
-#define EOS_MATCHER_CHAR	'\\'
+#define EOS_MATCHER_CHAR	'\f'
 
 static int n_isspace(char c)
 {
@@ -17,27 +17,29 @@ int nscanf(const char *str, const char *fmt, ...)
   const char *fp = fmt;
   va_list ap;
   char *ep;
-  char sc,fc;
+  char fc;
   long v;
   
   va_start(ap, fmt);
 
   while(*rp && *fp){
-    fc = *fp++;
-    if(n_isspace(fc))
-      continue;
-    else if(fc != '%'){
-      sc = *rp++;
-      while(n_isspace(sc))
-	sc = *rp++;
-      if(sc == 0){
-	rp--; fp--;
+    fc = *fp;
+#ifdef EOS_MATCHER_CHAR
+    if(fc == EOS_MATCHER_CHAR)
+      break;
+#endif
+    if(n_isspace(fc)){
+      /* do nothing */
+    } else if(fc != '%'){
+      while(n_isspace(*rp)) rp++;
+      if(*rp == 0)
 	break;
-      } else if(fc != sc) 
+      else if(fc != *rp) 
 	break;
-      
+      else
+	rp++;
     } else {  /* fc == '%' */
-      fc = *fp++;
+      fc = *++fp;
       if(fc == 'd' || fc == 'x'){
 	int *ip = va_arg(ap, int *);
 	v = strtol(rp, &ep, fc == 'd' ? 10 : 16);
@@ -55,8 +57,10 @@ int nscanf(const char *str, const char *fmt, ...)
 	rp = ep;
       }
     }
+    fp++;
   }
 #ifdef EOS_MATCHER_CHAR
+  while(n_isspace(*rp)) rp++;
   if(*rp == 0 && *fp == EOS_MATCHER_CHAR)
     cSuccess++;
 #endif

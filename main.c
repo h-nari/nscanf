@@ -7,15 +7,21 @@ int main(int argc,char *argv[])
   int a, b, c, i, r, yy, mm, dd;
   float fval;
 
-  r = nscanf("10 ", "%d\\", &i);
+  r = nscanf("2016/11/18", "%d/%d/%d",&yy,&mm,&dd);
+  assert(r == 3);
+  assert(yy == 2016);
+  assert(mm == 11);
+  assert(dd == 18);
+  
+  r = nscanf("10 ", "%d\f", &i);
   assert(r == 2);
   assert(i == 10);
   
-  r = nscanf("10", "%d\\", &i);
+  r = nscanf("10", "%d\f", &i);
   assert(r == 2);
   assert(i == 10);
   
-  r = nscanf("10a", "%d\\", &i);
+  r = nscanf("10a", "%d\f", &i);
   assert(r == 1);
   assert(i == 10);
 
@@ -35,12 +41,6 @@ int main(int argc,char *argv[])
   r = nscanf("  abc","%g", &fval);
   assert(r == 0);
 
-  r = nscanf("2016/11/18", "%d/%d/%d",&yy,&mm,&dd);
-  assert(r == 3);
-  assert(yy == 2016);
-  assert(mm == 11);
-  assert(dd == 18);
-  
   r = nscanf("89.4","%f", &fval);
   assert(r == 1);
   assert(fval > 89.4 - 0.001 && fval < 89.4 + 0.001);
