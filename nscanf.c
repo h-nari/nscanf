@@ -33,9 +33,9 @@ int nscanf(const char *str, const char *fmt, ...)
       
     } else {  /* fc == '%' */
       fc = *fp++;
-      if(fc == 'd'){
+      if(fc == 'd' || fc == 'x'){
 	int *ip = va_arg(ap, int *);
-	v = strtol(rp, &ep, 10);
+	v = strtol(rp, &ep, fc == 'd' ? 10 : 16);
 	if(rp == ep) break;
 	rp = ep;
 	*ip = v;

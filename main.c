@@ -4,9 +4,19 @@
 
 int main(int argc,char *argv[])
 {
-  int i, r, yy, mm, dd;
+  int a, b, c, i, r, yy, mm, dd;
   float fval;
 
+  r = nscanf("10","%x", &i);
+  assert(r == 1);
+  assert(i == 16);
+  
+  r = nscanf("10 ab -20","%d %x %d", &a, &b, &c);
+  assert(r == 3);
+  assert(a == 10);
+  assert(b == 0xab);
+  assert(c == -20);
+  
   r = nscanf("abc","%d", &i);
   assert(r == 0);
   
