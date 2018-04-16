@@ -16,7 +16,7 @@ Arduino環境でプログラムをしていて、sscanf関数が使えず、数�
 
 <pre>
  int yy,mm,dd;
- int r = nscanf("2016/11/18",&yy,&mm,&dd)
+ int r = nscanf("2016/11/18","%d/%d/%d",&yy,&mm,&dd)
 </pre>
 
 
@@ -36,8 +36,8 @@ gcc用にformat attributeでscanfを指定していますので、引数型に�
 
 <pre>
 int a,b,c,d;
-a = nscanf("123b","%d\f", b);
-c = nscanf("456","%d\f", d);
+a = nscanf("123b","%d\f", &b);
+c = nscanf("456","%d\f", &d);
 printf("a:%d b:%d c:%d d:%d\n",a,b,c,d);
 </pre>
 出力は以下のようになります。
